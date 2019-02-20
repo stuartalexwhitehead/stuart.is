@@ -1,39 +1,51 @@
 {
-  "name": "gatsby-starter-default",
-  "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
-  "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
-  "dependencies": {
-    "gatsby": "^2.1.4",
-    "gatsby-image": "^2.0.29",
-    "gatsby-plugin-manifest": "^2.0.17",
-    "gatsby-plugin-offline": "^2.0.23",
-    "gatsby-plugin-react-helmet": "^3.0.6",
-    "gatsby-plugin-sharp": "^2.0.20",
-    "gatsby-source-filesystem": "^2.0.20",
-    "gatsby-transformer-sharp": "^2.1.13",
-    "prop-types": "^15.7.2",
-    "react": "^16.8.2",
-    "react-dom": "^16.8.2",
-    "react-helmet": "^5.2.0"
-  },
-  "keywords": [
-    "gatsby"
-  ],
-  "license": "MIT",
-  "scripts": {
-    "build": "gatsby build",
-    "develop": "gatsby develop",
-    "start": "npm run develop",
-    "serve": "gatsby serve",
-    "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
-  },
-  "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
-  }
+    "name": "stuart.is",
+    "private": true,
+    "description": "The Wonderful World of Web",
+    "version": "0.1.0",
+    "author": "Stuart Whitehead",
+    "dependencies": {
+        "gatsby": "^2.1.4",
+        "gatsby-plugin-catch-links": "^2.0.11",
+        "gatsby-plugin-react-helmet": "^3.0.6",
+        "gatsby-source-filesystem": "^2.0.20",
+        "gatsby-transformer-remark": "^2.2.5",
+        "react": "^16.8.2",
+        "react-dom": "^16.8.2",
+        "react-helmet": "^5.2.0"
+    },
+    "license": "MIT",
+    "scripts": {
+        "build": "gatsby build",
+        "develop": "gatsby develop",
+        "start": "npm run develop",
+        "serve": "gatsby serve",
+        "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/stuartalexwhitehead/stuart.is"
+    },
+    "devDependencies": {
+        "eslint": "^5.14.1",
+        "eslint-config-airbnb": "^17.1.0",
+        "eslint-config-prettier": "^4.0.0",
+        "eslint-plugin-import": "^2.16.0",
+        "eslint-plugin-jsx-a11y": "^6.2.1",
+        "eslint-plugin-react": "^7.12.4",
+        "husky": "^1.3.1",
+        "lint-staged": "^8.1.4",
+        "prettier": "1.16.4"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.{js,jsx,json,css,md}": [
+            "prettier --write",
+            "git add"
+        ]
+    }
 }
