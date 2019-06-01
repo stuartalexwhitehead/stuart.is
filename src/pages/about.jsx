@@ -6,7 +6,7 @@ import Layout from "../components/Layout";
 import Headline from "../components/Headline";
 import Markdown from "../components/Markdown";
 import { fonts, colors, grid, breakpoints } from "../config.styles";
-import lock from "../helpers/lock";
+import lock, { doubleLock } from "../helpers/lock";
 import media from "../helpers/media";
 import Meta from "../components/Meta";
 
@@ -40,6 +40,7 @@ const Details = styled.div`
     font-family: ${fonts.SANS_SERIF};
     line-height: ${BASELINE};
     margin-bottom: ${BASELINE}em;
+    padding-right: ${BASELINE}em;
 
     ${lock(
         "margin-left",
@@ -62,58 +63,43 @@ const Details = styled.div`
     `};
 `;
 
-const Datetime = styled.time`
+const Tldr = styled.h3`
     color: ${colors.BLUE};
     ${lock("font-size", 14, 24, breakpoints.SMALL, breakpoints.LARGE)};
+    margin: 0;
+    ${lock("margin-bottom", 4, 12, breakpoints.SMALL, breakpoints.LARGE)};
 `;
 
-const TagList = styled.ul`
-    display: block;
-    list-style: none;
+const Ul = styled.ul`
     margin: 0;
     padding: 0;
-
-    ${media.LARGE`
-        padding-top: ${BASELINE}em;
-    `}
 `;
 
-const TagItem = styled.li`
-    margin: 0;
-    color: ${colors.MID_GREY};
-    display: inline;
+const Li = styled.li`
+    list-style-position: inside;
+    ${doubleLock(
+        "font-size",
+        14,
+        16,
+        breakpoints.SMALL,
+        breakpoints.LARGE,
+        breakpoints.MAX
+    )};
+`;
 
-    :not(:last-child) {
-        :after {
-            content: ", ";
-        }
+const A = styled.a`
+    color: ${colors.DARK_GREY};
+
+    :hover {
+        color: ${colors.BLUE};
     }
-
-    ${lock("font-size", 14, 24, breakpoints.SMALL, breakpoints.LARGE)};
-
-    :before {
-        content: "#";
-    }
-
-    ${media.LARGE`
-        display: block;
-
-        :not(:last-child) {
-            :after {
-                content: none;
-            }
-        }
-    `}
 `;
 
 export default ({
     data: {
-        markdownRemark: {
+        content: {
             html,
             frontmatter: {
-                title,
-                date,
-                tags,
                 meta: {
                     ogImage: {
                         childImageSharp: { resize }
@@ -126,17 +112,22 @@ export default ({
 }) => (
     <Layout>
         <Meta meta={restMeta} ogImage={resize} />
-        <Headline>{title}</Headline>
+        <Headline>Hello, I’m Stuart</Headline>
         <Grid>
             <Details>
-                <Datetime>{date}</Datetime>
-                {tags && tags.length > 0 && (
-                    <TagList>
-                        {tags.map(tag => (
-                            <TagItem key={tag}>{tag}</TagItem>
-                        ))}
-                    </TagList>
-                )}
+                <Tldr>tl;dr</Tldr>
+
+                <Ul>
+                    <Li>Web Developer and Tech Lead</Li>
+                    <Li>
+                        working at{" "}
+                        <A href="https://springload.co.nz">Springload</A>
+                    </Li>
+                    <Li>studied Computer Science</Li>
+                    <Li>favours JS, Python and AWS</Li>
+                    <Li>background in design agencies</Li>
+                    <Li>collaboration is my jam</Li>
+                </Ul>
             </Details>
             <Markdown html={html} />
         </Grid>
@@ -144,22 +135,20 @@ export default ({
 );
 
 export const pageQuery = graphql`
-    query BlogPostByPath($path: String!) {
-        markdownRemark(frontmatter: { path: { eq: $path } }) {
-            html
+    query About{
+        content: markdownRemark(
+            fileAbsolutePath: { regex: "/(pages/about)/.*\\.md$/"}
+          ) {
+            html,
             frontmatter {
-                date(formatString: "D MMM YYYY")
-                path
-                title
-                tags
                 meta {
-                    title
+                    title,
                     description
                     ogImage {
                         childImageSharp {
                             resize(width: 1200) {
-                                src
-                                width
+                                src,
+                                width,
                                 height
                             }
                         }
